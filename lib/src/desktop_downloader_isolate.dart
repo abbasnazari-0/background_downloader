@@ -34,6 +34,12 @@ String? _responseBody;
 /// Any subsequent commands can only be 'cancel' or 'pause'.
 Future<void> doTask((RootIsolateToken, SendPort) isolateArguments) async {
   final (rootIsolateToken, sendPort) = isolateArguments;
+  // check if web mode returns true
+  if (kIsWeb) {
+    sendPort.send('done');
+    Isolate.exit();
+  }
+
   BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
   final commandPort = ReceivePort();
   // send the command port back to the main Isolate
