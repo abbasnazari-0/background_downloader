@@ -38,6 +38,7 @@ Future<void> doTask((RootIsolateToken, SendPort) isolateArguments) async {
   if (kIsWeb) {
     sendPort.send('done');
     Isolate.exit();
+    return;
   }
 
   BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
